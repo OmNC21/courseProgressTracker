@@ -29,7 +29,7 @@ const CourseProgress = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     // Send a POST request to add new course progress data
     fetch('http://localhost:3001/course-progress', {
       method: 'POST',
@@ -40,7 +40,7 @@ const CourseProgress = () => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
+      console.log('Success:', data);
       // Fetch updated course progress data after adding a new entry
       fetch('http://localhost:3001/course-progress')
         .then(response => response.json())
@@ -49,6 +49,7 @@ const CourseProgress = () => {
     })
     .catch(error => console.error('Error adding course progress:', error));
   };
+  
 
   return (
     <div>
