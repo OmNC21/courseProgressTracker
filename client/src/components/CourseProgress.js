@@ -7,8 +7,6 @@ const CourseProgress = () => {
     course_name: '',
     videos_watched: 0,
     total_videos: 0,
-    time_watched: 0,
-    total_time: 0
   });
 
   useEffect(() => {
@@ -62,7 +60,6 @@ const CourseProgress = () => {
       },
       body: JSON.stringify({
         videos_watched: currentProgress.videos_watched + 1,
-        time_watched: currentProgress.time_watched + 10, // Assuming 10 minutes added
       }),
     })
     .then(response => response.json())
@@ -110,14 +107,6 @@ const CourseProgress = () => {
           Total Videos:
           <input type="number" name="total_videos" value={newProgress.total_videos} onChange={handleInputChange} required />
         </label>
-        <label>
-          Time Watched (minutes):
-          <input type="number" name="time_watched" value={newProgress.time_watched} onChange={handleInputChange} required />
-        </label>
-        <label>
-          Total Time (minutes):
-          <input type="number" name="total_time" value={newProgress.total_time} onChange={handleInputChange} required />
-        </label>
         <button type="submit">Add Course Progress</button>
       </form>
       <ul>
@@ -125,7 +114,6 @@ const CourseProgress = () => {
           <li key={progress.id}>
             <strong>{progress.course_name}</strong>
             <p>Videos Watched: {progress.videos_watched}/{progress.total_videos}</p>
-            <p>Time Watched: {progress.time_watched}/{progress.total_time} minutes</p>
             <button onClick={() => handleUpdate(progress.id)}>Update</button>
             <button onClick={() => handleDelete(progress.id)}>Delete</button>
           </li>

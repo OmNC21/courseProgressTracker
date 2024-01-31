@@ -45,9 +45,9 @@ app.get('/course-progress', (req, res) => {
 
 // API route to add course progress
 app.post('/course-progress', (req, res) => {
-  const { course_name, videos_watched, total_videos, time_watched, total_time } = req.body;
-  const sql = 'INSERT INTO course_progress (course_name, videos_watched, total_videos, time_watched, total_time) VALUES (?, ?, ?, ?, ?)';
-  const values = [course_name, videos_watched, total_videos, time_watched, total_time];
+  const { course_name, videos_watched, total_videos } = req.body;
+  const sql = 'INSERT INTO course_progress (course_name, videos_watched, total_videos) VALUES (?, ?, ?)';
+  const values = [course_name, videos_watched, total_videos];
 
   db.query(sql, values, (err) => {
     if (err) {
@@ -62,9 +62,9 @@ app.post('/course-progress', (req, res) => {
 // API route to update course progress
 app.put('/course-progress/:id', (req, res) => {
   const { id } = req.params;
-  const { videos_watched, time_watched } = req.body;
-  const sql = 'UPDATE course_progress SET videos_watched = ?, time_watched = ? WHERE id = ?';
-  const values = [videos_watched, time_watched, id];
+  const { videos_watched } = req.body;
+  const sql = 'UPDATE course_progress SET videos_watched = ? WHERE id = ?';
+  const values = [videos_watched, id];
 
   db.query(sql, values, (err) => {
     if (err) {
