@@ -2,7 +2,7 @@
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Add this line
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -55,6 +55,38 @@ app.post('/course-progress', (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     } else {
       res.json({ message: 'Course progress added successfully' });
+    }
+  });
+});
+
+// API route to update course progress
+app.put('/course-progress/:id', (req, res) => {
+  const { id } = req.params;
+  const { videos_watched, time_watched } = req.body;
+  const sql = 'UPDATE course_progress SET videos_watched = ?, time_watched = ? WHERE id = ?';
+  const values = [videos_watched, time_watched, id];
+
+  db.query(sql, values, (err) => {
+    if (err) {
+      console.error('Error updating course progress:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.json({ message: 'Course progress updated successfully' });
+    }
+  });
+});
+
+// API route to delete course progress
+app.delete('/course-progress/:id', (req, res) => {
+  const { id } = req.params;
+  const sql = 'DELETE FROM course_progress WHERE id = ?';
+
+  db.query(sql, [id], (err) => {
+    if (err) {
+      console.error('Error deleting course progress:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.json({ message: 'Course progress deleted successfully' });
     }
   });
 });
